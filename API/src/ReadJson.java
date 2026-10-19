@@ -82,38 +82,66 @@ public class ReadJson {
         org.json.simple.JSONObject jsonObject = (org.json.simple.JSONObject) parser.parse(totlaJson);
         System.out.println(jsonObject);
 
+//        try {
+//
+//            String name = (String)jsonObject.get("name");
+//
+//            org.json.simple.JSONArray msg = (org.json.simple.JSONArray) jsonObject.get("films");
+//            int n =   msg.size(); //(msg).length();
+//            for (int i = 0; i < n; ++i) {
+//                String test =(String) msg.get(i);
+//                System.out.println(test);
+//                // System.out.println(person.getInt("key"));
+//            }
+
         try {
+            String name = (String) jsonObject.get("name");
 
-            String name = (String)jsonObject.get("name");
-
-            org.json.simple.JSONArray msg = (org.json.simple.JSONArray) jsonObject.get("films");
-            int n =   msg.size(); //(msg).length();
-            for (int i = 0; i < n; ++i) {
-                String test =(String) msg.get(i);
+            org.json.simple.JSONArray filmsArray = (org.json.simple.JSONArray) jsonObject.get("films");
+            int totalFilms = filmsArray.size();
+            for (int i = 0; i < totalFilms; ++i) {
+                String test = (String) filmsArray.get(i);
                 System.out.println(test);
-                // System.out.println(person.getInt("key"));
             }
 
-           // try {
+            org.json.simple.JSONArray starshipsArray = (org.json.simple.JSONArray) jsonObject.get("starships");
+            int totalStarships = starshipsArray.size();
+            for (int i = 0; i < totalStarships; ++i) {
+                String test = (String) starshipsArray.get(i);
+                System.out.println(test);
 
-                //
+            }
+            org.json.simple.JSONObject starshipObj = (org.json.simple.JSONObject) parser.parse(starshipJson);
+            for (int i = 0; i < totalStarships; ++i) {
+                String starshipUrl = (String) starshipsArray.get(i);
+                URL url = new URL(starshipUrl);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
+                conn.setRequestMethod("GET");
+                conn.setRequestProperty("Accept", "application/json");
+                conn.setRequestProperty("User-Agent", "Mozilla/5.0");
 
-                String name = (String)jsonObject.get("name");
+                System.out.println("Output from Server .... \n");
+                BufferedReader br2 = new BufferedReader(new InputStreamReader(
+                        (conn.getInputStream())));
+                String starshipJson = "";
 
-                org.json.simple.JSONArray msg = (org.json.simple.JSONArray) jsonObject.get("films");
-                int n =   msg.size(); //(msg).length();
-                for (int i = 0; i < n; ++i) {
-                    String test = (String) msg.get(i);
-                    System.out.println(test);
-                    // System.out.println(person.getInt("key"))
+                while ((output = br2.readLine()) != null) {
+                    System.out.println(output);
+                    starshipJson += output;
                 }
-            String height= (String)jsonObject.get("height");
-            System.out.println(name);
-            String birth_year= (String)jsonObject.get("birth_year");
-            System.out.println(birth_year);
-            String eye_color= (String)jsonObject.get("eye_color");
-            System.out.println(eye_color);
+
+            }
+
+            String starshipname = (String) starshipObj.get("name");
+            System.out.println(starshipname);
+
+//            String height= (String)jsonObject.get("height");
+//            System.out.println(name);
+//            String birth_year= (String)jsonObject.get("birth_year");
+//            System.out.println(birth_year);
+//            String eye_color= (String)jsonObject.get("eye_color");
+//            System.out.println(eye_color);
 
         }
 
